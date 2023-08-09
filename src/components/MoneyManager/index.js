@@ -1,7 +1,9 @@
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
+
 import MoneyDetails from '../MoneyDetails'
 import TransactionItem from '../TransactionItem'
+import './index.css'
 
 const transactionTypeOptions = [
   {
@@ -52,7 +54,7 @@ class MoneyManager extends Component {
     )
     const {displayText} = typeOption
     const newTransaction = {
-      id: uuidv4,
+      id: uuidv4(),
       title: titleInput,
       amount: parseInt(amountInput),
       type: displayText,
@@ -108,24 +110,24 @@ class MoneyManager extends Component {
 
   render() {
     const {titleInput, amountInput, optionId, transactionsList} = this.state
-    const {balanceAmount} = this.balanceAmount()
-    const {expensesAmount} = this.expensesAmount()
-    const {incomeAmount} = this.incomeAmount()
+    const {balanceAmount} = this.getBalance()
+    const {expensesAmount} = this.getExpenses()
+    const {incomeAmount} = this.getIncome()
     return (
       <div className="app-container">
-        <div className="money-manager-container">
-          <h1 className="heading">Hi,Richard</h1>
-          <p className="description">
-            Welcome back to your <span className="span">Money Manager</span>
-          </p>
-        </div>
-        <MoneyDetails
-          balanceAmount={balanceAmount}
-          incomeAmount={incomeAmount}
-          expensesAmount={expensesAmount}
-        />
-        <div className="transaction-detail-container">
-          <div className="transaction-container">
+        <div className="responsive-container">
+          <div className="money-manager-container">
+            <h1 className="heading">Hi,Richard</h1>
+            <p className="description">
+              Welcome back to your <span className="span">Money Manager</span>
+            </p>
+          </div>
+          <MoneyDetails
+            balanceAmount={balanceAmount}
+            incomeAmount={incomeAmount}
+            expensesAmount={expensesAmount}
+          />
+          <div className="transaction-details">
             <form className="form" onSubmit={this.onAddTransaction}>
               <h1 className="transaction-heading">Add Transaction</h1>
               <label htmlFor="title" className="label">
@@ -154,7 +156,7 @@ class MoneyManager extends Component {
 
               <select
                 id="select"
-                className="select-input"
+                className="input"
                 value={optionId}
                 onChange={this.onChangeOptionId}
               >
